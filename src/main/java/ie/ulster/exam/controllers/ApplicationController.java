@@ -1,6 +1,7 @@
 package ie.ulster.exam.controllers;
 
 import ie.ulster.exam.dao.RoomDao;
+import ie.ulster.exam.dto.BookingDto;
 import ie.ulster.exam.models.Rooms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,30 @@ public class ApplicationController {
         // add empty room to the model
         model.addAttribute("room", new Rooms());
 
+        model.addAttribute("errorRoomName", false);
+        model.addAttribute("errorChildrenAttending", false);
 
         return "partyRooms";
     }
+
+    @RequestMapping(value = "/partyRooms", method = RequestMethod.POST)
+    public String rooms(Model model, BookingDto booking) {
+        List<Rooms> rooms;
+
+        rooms = roomDao.findAll();
+        model.addAttribute("partyRooms", rooms);
+
+        // add empty room to the model
+        model.addAttribute("room", new Rooms());
+
+        if(!booking.validate()) {
+            model.addAttribute("errors", booking.getErrors());
+        }
+
+        System.out.println(booking);
+
+        return "partyRooms";
+
+    }
+
 }

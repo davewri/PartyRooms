@@ -6,16 +6,25 @@ public class Rooms {
     private String roomName, feature;
     private int roomId, capacity;
     private Boolean alcoholAllowed;
+    private String childrenAttending = "";
 
     public Rooms() {
     }
 
-    public Rooms(int roomId, String room, String feature, int calacity, Boolean alcoholAllowed) {
+    public Rooms(int roomId, String room, String feature, int capacity, Boolean alcoholAllowed) {
         this.roomId = roomId;
         this.roomName = room;
         this.feature = feature;
-        this.capacity = calacity;
+        this.capacity = capacity;
         this.alcoholAllowed = alcoholAllowed;
+    }
+
+    public String getChildrenAttending() {
+        return childrenAttending;
+    }
+
+    public void setChildrenAttending(String childrenAttending) {
+        this.childrenAttending = childrenAttending;
     }
 
     public int getRoomId() {

@@ -9,79 +9,78 @@
     <!--/*/ <th:block th:include="fragments/navigation :: navigation"></th:block> /*/-->
     <!-- Bootstrap Container-->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-7">
-                <h3>Marty Party Planners</h3>
-                <H5>Please enter the details below and click Add Booking </H5>
-                <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
-                <form th:object="${room}" th:action="@{/partyRooms}" method="post" class="needs-validation">
-                    <input type="hidden" th:field="*{roomId}"/>
+        <form th:object="${room}" th:action="@{/partyRooms}" method="post" class="needs-validation">
+            <input type="hidden" th:field="*{roomId}"/>
+            <div class="row">
+                <div class="col-sm-7">
+                    <h3>Marty Party Planners</h3>
+                    <H5>Please enter the details below and click Add Booking </H5>
+                    <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="partyName">Name of Party</label>
                                 <input th:field="*{roomName}" type="text" class="form-control" id="partyName" placeholder=""  required>
+                                <div th:if="${errorRoomName==true}">There was error</div>
                             </div>
                         </div>
                         <div class="col">
-                            <form class="range-field my-4 w-500">
+                            <div class="range-field my-4 w-500">
                                 <label for="range">How many people invited to the party?</label>
                                 <input type="range" class="custom-range" id="range" min="1" max="20" />
-                            </form>
+                            </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="children">Children Attending?</label>
-                                <select class="form-control selectWidth" id="children">
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                <select th:field="*{childrenAttending}" class="form-control selectWidth" id="children">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
+                                <div th:if="${errorChildrenAttending==true}">There was error</div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap Container-->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-9">
-                    <!-- https://www.w3schools.com/bootstrap4/bootstrap_buttons.asp -->
-                <p>
-                    <a href="/newBooking" th:href="@{/newBooking}" class="btn btn-outline-primary" role="button">Add Booking</a>
-                </p>
-                <!-- Add table if the products list contains products-->
-                <!-- Bootstrap: https://getbootstrap.com/docs/4.0/content/tables/-->
-                <table class="table table-hover table-bordered table-striped" th:if="${not #lists.isEmpty(partyRooms)}">
-                    <thead>
-                        <tr>
-                            <th input type="checkbox"></th>
-                            <th>Room Name</th>
-                            <th>Capacity</th>
-                            <th>Feature</th>
-                            <th>Alcohol Allowed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="room : ${partyRooms}">
-                            <td><div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="blankCheckbox" value=""/>
-                                </label>
-                            </div></td>
-                            <td th:text="${room.roomName}">Room Name</td>
-                            <td th:text="${room.capacity}">Capacity</td>
-                            <td th:text="${room.feature}">Feature</td>
-                            <td th:text="${room.alcoholAllowed}">Alcohol Allowed</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> <!-- End Party Rooms col -->
-        </div> <!-- End row -->
+            <div class="row">
+                <div class="col-sm-9">
+                        <!-- https://www.w3schools.com/bootstrap4/bootstrap_buttons.asp -->
+                    <p>
+                        <button type="submit" class="btn btn-outline-primary">Add Booking</button>
+                    </p>
+                    <!-- Add table if the products list contains products-->
+                    <!-- Bootstrap: https://getbootstrap.com/docs/4.0/content/tables/-->
+                    <table class="table table-hover table-bordered table-striped" th:if="${not #lists.isEmpty(partyRooms)}">
+                        <thead>
+                            <tr>
+                                <th input type="checkbox"></th>
+                                <th>Room Name</th>
+                                <th>Capacity</th>
+                                <th>Feature</th>
+                                <th>Alcohol Allowed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="room : ${partyRooms}">
+                                <td><div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="blankCheckbox" value=""/>
+                                    </label>
+                                </div></td>
+                                <td th:text="${room.roomName}">Room Name</td>
+                                <td th:text="${room.capacity}">Capacity</td>
+                                <td th:text="${room.feature}">Feature</td>
+                                <td th:text="${room.alcoholAllowed}">Alcohol Allowed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- End Party Rooms col -->
+            </div> <!-- End row -->
+        </form>
     </div> <!-- End container -->
-<!-- JavaScript dependencies for Bootstrap 4-->
+
+    <!-- JavaScript dependencies for Bootstrap 4-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
